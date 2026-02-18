@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST — Find Your Perfect Rental Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #FF5C45;
+    --coral-light: #FF8070;
+    --coral-pale: #FFF0EE;
+    --teal: #0A9E8A;
+    --teal-light: #12C4AD;
+    --teal-pale: #E6FAF7;
+    --navy: #12223A;
+    --navy2: #1C3051;
+    --slate: #4A5568;
+    --muted: #8896A8;
+    --border: #E8EDF4;
+    --bg: #F7F9FC;
+    --white: #FFFFFF;
+    --yellow: #FFBA00;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ─── CUSTOM CURSOR DOT ─── */
+  body::after {
+    content: '';
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--coral);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.15s;
+    display: none;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5rem;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    color: var(--navy);
+    text-decoration: none;
+    letter-spacing: -1px;
+  }
+
+  .logo span {
+    color: var(--coral);
+    display: inline-block;
+    transform: rotate(-3deg);
+    transform-origin: center;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--slate);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--coral); }
+
+  .nav-pill {
+    background: var(--navy);
+    color: var(--white) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 100px;
+    transition: background 0.2s !important;
+  }
+
+  .nav-pill:hover { background: var(--coral) !important; }
+
+  .nav-sign {
+    border: 1.5px solid var(--border);
+    padding: 0.55rem 1.3rem;
+    border-radius: 100px;
+    transition: border-color 0.2s !important;
+  }
+
+  .nav-sign:hover { border-color: var(--coral) !important; color: var(--coral) !important; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    padding: 8rem 5rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-blob1 {
+    position: absolute;
+    top: -10%; right: -5%;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(255,92,69,0.08), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-blob2 {
+    position: absolute;
+    bottom: -10%; left: -5%;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(10,158,138,0.06), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Dotted pattern */
+  .hero-dots {
+    position: absolute;
+    top: 10%; right: 52%;
+    width: 200px; height: 200px;
+    background-image: radial-gradient(circle, rgba(10,158,138,0.15) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--teal-pale);
+    border: 1px solid rgba(10,158,138,0.2);
+    color: var(--teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.8rem;
+    animation: slideIn 0.7s ease both;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.7s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    color: var(--coral);
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 4px;
+    background: var(--coral);
+    opacity: 0.25;
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--slate);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    max-width: 460px;
+    font-weight: 400;
+    animation: slideIn 0.7s 0.2s ease both;
+  }
+
+  /* Search bar */
+  .search-box {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 0.6rem 0.6rem 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.7s 0.3s ease both;
+    max-width: 520px;
+  }
+
+  .search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    color: var(--navy);
+    outline: none;
+  }
+
+  .search-box input::placeholder { color: var(--muted); }
+
+  .search-btn {
+    background: var(--coral);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .search-btn:hover {
+    background: var(--coral-light);
+    transform: scale(1.03);
+  }
+
+  .search-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    animation: slideIn 0.7s 0.35s ease both;
+  }
+
+  .search-tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--slate);
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .search-tag:hover { border-color: var(--coral); color: var(--coral); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    animation: slideIn 0.7s 0.4s ease both;
+  }
+
+  .stat-item { }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 0.1rem; }
+
+  /* Hero right */
+  .hero-right {
+    position: relative;
+    animation: floatIn 0.9s 0.2s ease both;
+  }
+
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-card-main {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(18,34,58,0.12);
+    position: relative;
+  }
+
+  .hero-card-img {
+    height: 260px;
+    background: linear-gradient(135deg, #E8F4FF, #D0E8F0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    position: relative;
+  }
+
+  .hero-card-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(255,255,255,0.8));
+  }
+
+  .verified-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--teal);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    z-index: 2;
+  }
+
+  .hero-card-body { padding: 1.5rem; }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: var(--navy);
+  }
+
+  .card-loc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--coral); }
+  .card-price span { font-size: 0.75rem; font-weight: 400; color: var(--muted); font-family: 'Nunito', sans-serif; }
+
+  .card-chips { display: flex; gap: 0.4rem; }
+
+  .chip {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--slate);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .floating-tag {
+    position: absolute;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 30px rgba(18,34,58,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .ftag-top {
+    top: -1.5rem; left: -2rem;
+    animation: float1 4s ease-in-out infinite;
+  }
+
+  .ftag-bottom {
+    bottom: -1.5rem; right: -2rem;
+    animation: float2 4s 1s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  .ftag-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 5rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    overflow-x: auto;
+  }
+
+  .trust-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .trust-divider {
+    width: 1px; height: 24px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .trust-items {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  .trust-item .tick {
+    width: 20px; height: 20px;
+    background: var(--teal-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--teal);
+    font-weight: 800;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 7rem 5rem; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  #how-it-works {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+
+  .hiw-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hiw-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .hiw-header .section-desc { margin: 0 auto; }
+
+  .hiw-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    position: relative;
+  }
+
+  .hiw-steps::before {
+    content: '';
+    position: absolute;
+    top: 40px; left: 12%; right: 12%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--coral) 0, var(--coral) 8px, transparent 8px, transparent 20px);
+    opacity: 0.3;
+  }
+
+  .hiw-step {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+  }
+
+  .step-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .hiw-step:hover .step-circle {
+    background: var(--coral-pale);
+    border-color: var(--coral);
+    transform: scale(1.1);
+  }
+
+  .step-num-badge {
+    position: absolute;
+    top: -6px; right: -6px;
+    width: 24px; height: 24px;
+    background: var(--coral);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .hiw-step h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .hiw-step p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ─── LISTINGS ─── */
+  #listings { background: var(--bg); }
+
+  .listings-inner { max-width: 1200px; margin: 0 auto; }
+
+  .listings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter-btn {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    color: var(--slate);
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: white;
+  }
+
+  .rent-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .rent-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .rent-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(18,34,58,0.1);
+  }
+
+  .rent-img {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+  }
+
+  .rent-img .badge {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+  }
+
+  .badge-new { background: var(--teal); color: white; }
+  .badge-hot { background: var(--coral); color: white; }
+  .badge-furn { background: var(--yellow); color: var(--navy); }
+
+  .fav-btn {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 32px; height: 32px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+
+  .fav-btn:hover { transform: scale(1.2); }
+
+  .rent-body { padding: 1.25rem; }
+
+  .rent-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .rent-loc { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.9rem; }
+
+  .rent-amenities {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .amenit {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--slate);
+    font-weight: 600;
+  }
+
+  .rent-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .rent-price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--coral);
+  }
+
+  .rent-price span { font-size: 0.75rem; font-weight: 400; color: var(--muted); font-family: 'Nunito', sans-serif; }
+
+  .contact-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .contact-btn:hover { background: var(--coral); }
+
+  /* ─── FEATURES ─── */
+  #features {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #features::before {
+    content: '';
+    position: absolute;
+    top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(255,92,69,0.12), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .feat-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .feat-left .section-title { color: var(--white); }
+  .feat-left .section-desc { color: rgba(255,255,255,0.5); }
+
+  .feat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .feat-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.2rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .feat-item:hover { background: rgba(255,92,69,0.1); border-color: rgba(255,92,69,0.2); }
+
+  .feat-ico {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(255,92,69,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .feat-text h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .feat-text p { font-size: 0.84rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+  .feat-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.75rem;
+    text-align: center;
+    transition: background 0.3s;
+  }
+
+  .stat-card:hover { background: rgba(255,92,69,0.1); }
+
+  .stat-card .big-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--coral);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-card p { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+  .stat-card.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--white); border-top: 1px solid var(--border); }
+
+  .testi-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testi-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    transition: box-shadow 0.3s;
+  }
+
+  .testi-card:hover { box-shadow: 0 8px 32px rgba(18,34,58,0.08); }
+
+  .stars { color: var(--yellow); font-size: 0.9rem; margin-bottom: 1rem; }
+
+  .testi-text { font-size: 0.9rem; color: var(--slate); line-height: 1.7; margin-bottom: 1.5rem; }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .t-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .t-name { font-weight: 700; font-size: 0.9rem; color: var(--navy); }
+  .t-city { font-size: 0.77rem; color: var(--muted); }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: linear-gradient(135deg, var(--coral) 0%, #FF8C45 100%);
+    padding: 6rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '🏠';
+    position: absolute;
+    font-size: 20rem;
+    opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .cta-inner h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-inner p { color: rgba(255,255,255,0.75); font-size: 1.05rem; margin-bottom: 2.5rem; line-height: 1.7; }
+
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-white {
+    background: white;
+    color: var(--coral);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-white:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+
+  .btn-ghost-white {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-ghost-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* ─── POLICIES ─── */
+  #policies { background: var(--bg); border-top: 1px solid var(--border); }
+
+  .policy-inner { max-width: 1100px; margin: 0 auto; }
+
+  .policy-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 2.5rem 0;
+  }
+
+  .tab-btn {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    color: var(--slate);
+    padding: 0.6rem 1.3rem;
+    border-radius: 100px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+  .tab-btn.active {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: white;
+  }
+
+  .policy-content { display: none; }
+  .policy-content.active {
+    display: block;
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 3rem;
+  }
+
+  .policy-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .policy-date { font-size: 0.78rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+  .policy-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .policy-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .policy-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .policy-section h4::before {
+    content: '';
+    width: 4px; height: 16px;
+    background: var(--coral);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .policy-section p, .policy-section li {
+    font-size: 0.88rem;
+    color: var(--slate);
+    line-height: 1.8;
+    margin-bottom: 0.4rem;
+  }
+
+  .policy-section ul { padding-left: 1.25rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    color: var(--white);
+    padding: 5rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: white;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    display: block;
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--coral); }
+
+  .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.7rem; }
+  .footer-col a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--coral); }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+    #home { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-right { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .hiw-steps { grid-template-columns: 1fr 1fr; }
+    .hiw-steps::before { display: none; }
+    .rent-cards { grid-template-columns: 1fr; }
+    .feat-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .feat-right { grid-template-columns: 1fr 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .trust-bar { padding: 1.2rem 1.5rem; }
+    #cta { padding: 5rem 1.5rem; }
+    footer { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#home" class="logo">test<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#listings">Browse Homes</a></li>
+    <li><a href="#features">Why TEST</a></li>
+    <li><a href="#policies">Policies</a></li>
+    <li><a href="#" class="nav-sign">Sign In</a></li>
+    <li><a href="#cta" class="nav-pill">Find a Home</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="home">
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-dots"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge"><div class="live-dot"></div> 2,400+ Homes Available Now</div>
+    <h1>Find Your <span class="highlight">Perfect</span><br>Rental Home</h1>
+    <p class="hero-sub">TEST connects renters with verified landlords across India. Browse thousands of rental homes, filter by budget, and move in faster — without the broker hassle.</p>
+
+    <div class="search-box">
+      <span>📍</span>
+      <input type="text" placeholder="Search by city, area, or locality...">
+      <button class="search-btn">Search Homes</button>
+    </div>
+
+    <div class="search-tags">
+      <span style="font-size:0.78rem;color:var(--muted);font-weight:600;">Popular:</span>
+      <span class="search-tag">Mumbai</span>
+      <span class="search-tag">Bengaluru</span>
+      <span class="search-tag">Jaipur</span>
+      <span class="search-tag">Hyderabad</span>
+      <span class="search-tag">Delhi NCR</span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">18K+</div>
+        <div class="stat-label">Verified Listings</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">9,200</div>
+        <div class="stat-label">Happy Tenants</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Broker Fees</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="floating-tag ftag-top">
+      <div class="ftag-icon" style="background:#E6FAF7;">🔑</div>
+      <div>
+        <div style="font-size:0.7rem;color:var(--muted);">Ready to Move</div>
+        <div style="color:var(--teal);">Instant Booking</div>
+      </div>
+    </div>
+
+    <div class="hero-card-main">
+      <div class="hero-card-img" style="background:linear-gradient(135deg,#EEF4FF,#D8ECF0);">
+        🏠
+        <div class="verified-badge">✓ Verified</div>
+      </div>
+      <div class="hero-card-body">
+        <div class="card-title">2 BHK Furnished Apartment</div>
+        <div class="card-loc">📍 Indiranagar, Bengaluru</div>
+        <div class="card-chips" style="margin-bottom:1rem;">
+          <div class="chip">🛏 2 BHK</div>
+          <div class="chip">🚿 2 Bath</div>
+          <div class="chip">🅿 Parking</div>
+          <div class="chip">🌐 WiFi</div>
+        </div>
+        <div class="card-meta">
+          <div class="card-price">₹24,000 <span>/month</span></div>
+          <button class="contact-btn">Contact Owner</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-tag ftag-bottom">
+      <div class="ftag-icon" style="background:#FFF0EE;">⭐</div>
+      <div>
+        <div style="font-size:0.7rem;color:var(--muted);">Rating</div>
+        <div style="color:var(--coral);">4.9 / 5.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUST BAR ─── -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by renters across India</span>
+  <div class="trust-divider"></div>
+  <div class="trust-items">
+    <div class="trust-item"><div class="tick">✓</div> Zero Brokerage</div>
+    <div class="trust-item"><div class="tick">✓</div> KYC-Verified Landlords</div>
+    <div class="trust-item"><div class="tick">✓</div> Digital Rent Agreements</div>
+    <div class="trust-item"><div class="tick">✓</div> 24/7 Renter Support</div>
+    <div class="trust-item"><div class="tick">✓</div> Secure Payments</div>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how-it-works">
+  <div class="hiw-inner">
+    <div class="hiw-header reveal">
+      <div class="section-tag">The Process</div>
+      <h2 class="section-title">Renting made ridiculously simple</h2>
+      <p class="section-desc">From search to keys in hand — TEST handles everything so you can focus on finding the home you love.</p>
+    </div>
+    <div class="hiw-steps">
+      <div class="hiw-step reveal">
+        <div class="step-circle">🔍<div class="step-num-badge">1</div></div>
+        <h3>Search & Filter</h3>
+        <p>Use smart filters to find homes by city, rent range, BHK size, and preferred amenities.</p>
+      </div>
+      <div class="hiw-step reveal">
+        <div class="step-circle">📋<div class="step-num-badge">2</div></div>
+        <h3>View & Shortlist</h3>
+        <p>Browse verified listings with photos, virtual tours, and honest reviews from past tenants.</p>
+      </div>
+      <div class="hiw-step reveal">
+        <div class="step-circle">💬<div class="step-num-badge">3</div></div>
+        <h3>Connect Directly</h3>
+        <p>Message landlords directly through the app. Schedule visits at your convenience, no middleman.</p>
+      </div>
+      <div class="hiw-step reveal">
+        <div class="step-circle">🔑<div class="step-num-badge">4</div></div>
+        <h3>Sign & Move In</h3>
+        <p>Sign your digital rental agreement securely online and move into your new home. Done!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LISTINGS ─── -->
+<section id="listings">
+  <div class="listings-inner">
+    <div class="listings-header">
+      <div>
+        <div class="section-tag">Available Now</div>
+        <h2 class="section-title">Browse Rental Homes</h2>
+      </div>
+      <a href="#cta" style="font-size:0.88rem;font-weight:700;color:var(--coral);text-decoration:none;">View All Listings →</a>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter(this)">All</button>
+      <button class="filter-btn" onclick="setFilter(this)">1 BHK</button>
+      <button class="filter-btn" onclick="setFilter(this)">2 BHK</button>
+      <button class="filter-btn" onclick="setFilter(this)">3 BHK</button>
+      <button class="filter-btn" onclick="setFilter(this)">Furnished</button>
+      <button class="filter-btn" onclick="setFilter(this)">Semi-Furnished</button>
+      <button class="filter-btn" onclick="setFilter(this)">Pet Friendly</button>
+    </div>
+    <div class="rent-cards">
+      <div class="rent-card reveal">
+        <div class="rent-img" style="background:linear-gradient(135deg,#EEF4FF,#C8DCFF);">
+          🏢
+          <div class="badge badge-new">New</div>
+          <button class="fav-btn">🤍</button>
+        </div>
+        <div class="rent-body">
+          <div class="rent-title">Modern 2 BHK Apartment</div>
+          <div class="rent-loc">📍 Koramangala, Bengaluru</div>
+          <div class="rent-amenities">
+            <div class="amenit">🛏 2 Beds</div>
+            <div class="amenit">🚿 2 Bath</div>
+            <div class="amenit">📐 1100 sqft</div>
+            <div class="amenit">🅿 Parking</div>
+          </div>
+          <div class="rent-footer">
+            <div class="rent-price">₹26,000 <span>/mo</span></div>
+            <button class="contact-btn">Contact</button>
+          </div>
+        </div>
+      </div>
+      <div class="rent-card reveal">
+        <div class="rent-img" style="background:linear-gradient(135deg,#FFF5E8,#FFE4C4);">
+          🏡
+          <div class="badge badge-hot">🔥 Hot</div>
+          <button class="fav-btn">🤍</button>
+        </div>
+        <div class="rent-body">
+          <div class="rent-title">Cozy 1 BHK Studio</div>
+          <div class="rent-loc">📍 Andheri West, Mumbai</div>
+          <div class="rent-amenities">
+            <div class="amenit">🛏 1 Bed</div>
+            <div class="amenit">🚿 1 Bath</div>
+            <div class="amenit">📐 600 sqft</div>
+            <div class="amenit">🌐 WiFi</div>
+          </div>
+          <div class="rent-footer">
+            <div class="rent-price">₹18,500 <span>/mo</span></div>
+            <button class="contact-btn">Contact</button>
+          </div>
+        </div>
+      </div>
+      <div class="rent-card reveal">
+        <div class="rent-img" style="background:linear-gradient(135deg,#E8FFF5,#C4F0E0);">
+          🏘️
+          <div class="badge badge-furn">Furnished</div>
+          <button class="fav-btn">🤍</button>
+        </div>
+        <div class="rent-body">
+          <div class="rent-title">Spacious 3 BHK House</div>
+          <div class="rent-loc">📍 C-Scheme, Jaipur</div>
+          <div class="rent-amenities">
+            <div class="amenit">🛏 3 Beds</div>
+            <div class="amenit">🚿 2 Bath</div>
+            <div class="amenit">📐 1800 sqft</div>
+            <div class="amenit">🌿 Garden</div>
+          </div>
+          <div class="rent-footer">
+            <div class="rent-price">₹22,000 <span>/mo</span></div>
+            <button class="contact-btn">Contact</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section id="features">
+  <div class="feat-inner">
+    <div class="feat-left">
+      <div class="section-tag" style="color:var(--coral);">Why TEST</div>
+      <h2 class="section-title">Built entirely for renters</h2>
+      <p class="section-desc">Every feature on TEST exists to make your rental journey faster, safer, and completely broker-free.</p>
+      <div class="feat-list">
+        <div class="feat-item reveal">
+          <div class="feat-ico">🛡️</div>
+          <div class="feat-text">
+            <h4>Verified Landlords Only</h4>
+            <p>Every landlord on TEST completes KYC and property document verification before their listings go live.</p>
+          </div>
+        </div>
+        <div class="feat-item reveal">
+          <div class="feat-ico">📄</div>
+          <div class="feat-text">
+            <h4>Digital Rent Agreements</h4>
+            <p>Sign legally binding rental agreements online in minutes — no paperwork, no notary trips.</p>
+          </div>
+        </div>
+        <div class="feat-item reveal">
+          <div class="feat-ico">💰</div>
+          <div class="feat-text">
+            <h4>Zero Brokerage, Always</h4>
+            <p>We don't charge brokers or renters. Every connection is direct, transparent, and free.</p>
+          </div>
+        </div>
+        <div class="feat-item reveal">
+          <div class="feat-ico">🔔</div>
+          <div class="feat-text">
+            <h4>Instant Match Alerts</h4>
+            <p>Save your preferences and get notified the moment a matching home becomes available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feat-right reveal">
+      <div class="stat-card tall">
+        <div class="big-num">₹0</div>
+        <p>Brokerage fee, ever</p>
+      </div>
+      <div class="stat-card">
+        <div class="big-num">48h</div>
+        <p>Average time to find a home</p>
+      </div>
+      <div class="stat-card">
+        <div class="big-num">98%</div>
+        <p>Tenant satisfaction rate</p>
+      </div>
+      <div class="stat-card">
+        <div class="big-num">40+</div>
+        <p>Cities across India</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <div>
+        <div class="section-tag">Real Stories</div>
+        <h2 class="section-title">Loved by renters everywhere</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--navy);">4.9</span>
+        <div>
+          <div style="color:var(--yellow);font-size:1rem;">★★★★★</div>
+          <div style="font-size:0.75rem;color:var(--muted);">Based on 6,400+ reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">Found my dream 2BHK in Bengaluru within 3 days of signing up. No broker, no hidden charges. The landlord was verified and super professional. Highly recommend TEST!</p>
+        <div class="testi-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,var(--coral),#FF8C45);">S</div>
+          <div>
+            <div class="t-name">Sneha Kapoor</div>
+            <div class="t-city">IT Professional, Bengaluru</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">The digital rent agreement saved me so much time. I was relocating for work and needed a place fast. TEST delivered a verified flat in 48 hours. Zero brokerage, just as promised.</p>
+        <div class="testi-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,var(--teal),#0CC9B5);">M</div>
+          <div>
+            <div class="t-name">Mohammed Riyaz</div>
+            <div class="t-city">Finance Analyst, Hyderabad</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">As a first-time renter moving to Mumbai alone, I was nervous. TEST's verified listings and direct landlord chat made me feel completely safe. Found a great studio in Andheri!</p>
+        <div class="testi-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">P</div>
+          <div>
+            <div class="t-name">Prachi Mehra</div>
+            <div class="t-city">Graduate Student, Mumbai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="section-tag" style="color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);padding:0.3rem 1rem;border-radius:100px;display:inline-block;margin-bottom:1.5rem;">Start Today — It's Free</div>
+    <h2>Your next home is<br>one search away</h2>
+    <p>Join over 9,000 renters who found their home on TEST — no brokers, no fees, no stress. Create your free account and start browsing.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-white">🏠 Find My Home</a>
+      <a href="#" class="btn-ghost-white">List a Property</a>
+    </div>
+    <p style="margin-top:1.5rem;font-size:0.78rem;color:rgba(255,255,255,0.5);">Free to browse · No credit card needed · Verified listings only</p>
+  </div>
+</section>
+
+<!-- ─── POLICIES ─── -->
+<section id="policies">
+  <div class="policy-inner">
+    <div class="section-tag">Legal & Safety</div>
+    <h2 class="section-title">Our Policies</h2>
+    <p class="section-desc">We protect every renter and landlord on TEST with clear, fair, and transparent policies.</p>
+
+    <div class="policy-tabs">
+      <button class="tab-btn active" onclick="showPolicy('terms')">Terms of Service</button>
+      <button class="tab-btn" onclick="showPolicy('privacy')">Privacy Policy</button>
+      <button class="tab-btn" onclick="showPolicy('tenant')">Tenant Rights</button>
+      <button class="tab-btn" onclick="showPolicy('landlord')">Landlord Guidelines</button>
+      <button class="tab-btn" onclick="showPolicy('cookie')">Cookie Policy</button>
+    </div>
+
+    <!-- TERMS -->
+    <div class="policy-content active" id="policy-terms">
+      <h3>Terms of Service</h3>
+      <p class="policy-date">Effective: January 1, 2025 &nbsp;|&nbsp; Last Updated: February 2025</p>
+      <div class="policy-section">
+        <h4>1. Acceptance of Terms</h4>
+        <p>By registering or using TEST ("the Platform"), you agree to be bound by these Terms of Service and all applicable laws. These terms apply to all users including tenants, landlords, and visitors. TEST reserves the right to update these terms at any time.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. Eligibility</h4>
+        <p>You must be at least 18 years old to use TEST. Landlords must have legal ownership or authorized rights to rent the properties they list. All users must provide accurate identity and contact information during registration.</p>
+      </div>
+      <div class="policy-section">
+        <h4>3. Platform Role</h4>
+        <p>TEST is a rental listing marketplace connecting landlords and tenants. We are not a party to any rental agreement and are not responsible for the conduct of landlords, the condition of properties, or the outcome of any tenancy. Users engage with one another at their own discretion.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. Prohibited Activities</h4>
+        <ul>
+          <li>Listing properties you do not own or have authority to rent.</li>
+          <li>Posting misleading or fraudulent property information or photographs.</li>
+          <li>Contacting users for purposes unrelated to rental transactions.</li>
+          <li>Collecting deposits or payments outside the TEST platform without disclosure.</li>
+          <li>Using automated scrapers or bots to interact with the platform.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>5. Payments & Deposits</h4>
+        <p>Any rental payments, security deposits, or advance payments are made directly between landlords and tenants. TEST does not hold or process rental funds unless using our optional secure payment feature. TEST is not liable for any financial disputes between parties.</p>
+      </div>
+      <div class="policy-section">
+        <h4>6. Termination</h4>
+        <p>TEST reserves the right to suspend or permanently ban accounts that violate these terms. Users may deactivate their accounts at any time by emailing support@test.in.</p>
+      </div>
+    </div>
+
+    <!-- PRIVACY -->
+    <div class="policy-content" id="policy-privacy">
+      <h3>Privacy Policy</h3>
+      <p class="policy-date">Effective: January 1, 2025 &nbsp;|&nbsp; Last Updated: February 2025</p>
+      <div class="policy-section">
+        <h4>1. Information We Collect</h4>
+        <ul>
+          <li><strong>Identity Data:</strong> Name, phone number, email address, and government ID (for KYC).</li>
+          <li><strong>Listing Data:</strong> Property address, rent amount, photographs, and description.</li>
+          <li><strong>Communication Data:</strong> Messages sent between landlords and tenants via the platform.</li>
+          <li><strong>Usage Data:</strong> Search queries, pages visited, filters used, and time spent on the platform.</li>
+          <li><strong>Device Data:</strong> IP address, device type, browser, and location (with consent).</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>2. How We Use Your Data</h4>
+        <p>We use your information to provide the rental matching service, verify identities and listings, personalize search results and recommendations, send transactional emails and service notifications, prevent fraud, and comply with Indian laws including the IT Act.</p>
+      </div>
+      <div class="policy-section">
+        <h4>3. Data Sharing</h4>
+        <p>We never sell your personal information. We share only what is necessary with identity verification partners, payment processors, and cloud infrastructure providers — all under strict data processing agreements. Your contact details are shared with other users only when you initiate contact.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. Your Rights</h4>
+        <p>You may access, update, export, or delete your personal data at any time via your account settings or by contacting privacy@test.in. We respond to all data requests within 30 days as required under applicable laws.</p>
+      </div>
+    </div>
+
+    <!-- TENANT RIGHTS -->
+    <div class="policy-content" id="policy-tenant">
+      <h3>Tenant Rights & Protections</h3>
+      <p class="policy-date">Effective: January 1, 2025 &nbsp;|&nbsp; Last Updated: February 2025</p>
+      <div class="policy-section">
+        <h4>1. Right to Accurate Information</h4>
+        <p>Every listing on TEST must accurately represent the property. If you find a listing to be materially different from what was described, you can report it and we will investigate within 24 hours. Misrepresented listings are removed and landlords may be banned.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. Right to Zero Brokerage</h4>
+        <p>TEST is a zero-brokerage platform. No user may charge tenants a brokerage fee for connections made on TEST. Any landlord or intermediary found charging brokerage will be permanently removed from the platform.</p>
+      </div>
+      <div class="policy-section">
+        <h4>3. Security Deposit Protections</h4>
+        <ul>
+          <li>Landlords may not demand more than 2 months' rent as a security deposit (as per Model Tenancy Act guidelines).</li>
+          <li>Deposits must be refunded within 30 days of vacating the property, minus legitimate deductions.</li>
+          <li>Tenants are advised to use the optional TEST escrow service for deposit protection.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>4. Anti-Discrimination Policy</h4>
+        <p>TEST strictly prohibits discrimination against tenants on the basis of religion, caste, gender, marital status, diet, nationality, or disability. Any landlord found engaging in discriminatory practices will be permanently removed. Tenants facing discrimination can report via the in-app reporting tool.</p>
+      </div>
+      <div class="policy-section">
+        <h4>5. Dispute Resolution</h4>
+        <p>If you have a dispute with a landlord, contact disputes@test.in with relevant evidence. Our mediation team will attempt to resolve disputes within 5–7 business days. TEST also connects users with qualified property law professionals for complex cases.</p>
+      </div>
+    </div>
+
+    <!-- LANDLORD GUIDELINES -->
+    <div class="policy-content" id="policy-landlord">
+      <h3>Landlord Guidelines</h3>
+      <p class="policy-date">Effective: January 1, 2025 &nbsp;|&nbsp; Last Updated: February 2025</p>
+      <div class="policy-section">
+        <h4>1. Eligibility to List</h4>
+        <p>To list a property on TEST, you must be the legal owner, authorized agent of the owner, or a society/company with rental rights. You must complete identity and property verification before any listing goes live.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. Listing Quality Standards</h4>
+        <ul>
+          <li>Minimum 5 clear, current photographs of the property.</li>
+          <li>Accurate BHK configuration, carpet area, and rent amount.</li>
+          <li>Complete amenities checklist — furnished, semi-furnished, or unfurnished.</li>
+          <li>Accurate locality and floor information.</li>
+          <li>Availability date and preferred tenant type (if any).</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>3. Landlord Responsibilities</h4>
+        <p>You must respond to genuine tenant inquiries within 48 hours. You must ensure the property is in a habitable condition before handing over keys. You may not collect any payment from tenants before a signed rental agreement is in place. You are responsible for registering the rental agreement as per applicable state tenancy laws.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. Prohibited Practices</h4>
+        <ul>
+          <li>Demanding brokerage, platform fees, or application charges from tenants.</li>
+          <li>Discrimination based on caste, religion, diet, gender, or marital status.</li>
+          <li>Listing properties not in your legal control.</li>
+          <li>Refusing to refund deposits without documented cause.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COOKIE -->
+    <div class="policy-content" id="policy-cookie">
+      <h3>Cookie Policy</h3>
+      <p class="policy-date">Effective: January 1, 2025 &nbsp;|&nbsp; Last Updated: February 2025</p>
+      <div class="policy-section">
+        <h4>1. What Are Cookies</h4>
+        <p>Cookies are small data files stored in your browser when you visit TEST. They help us remember your preferences, keep you logged in, and understand how you use the platform so we can improve it.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. Types of Cookies We Use</h4>
+        <ul>
+          <li><strong>Essential Cookies:</strong> Required for login sessions and core platform functionality.</li>
+          <li><strong>Preference Cookies:</strong> Store your search filters, city preference, and display settings.</li>
+          <li><strong>Analytics Cookies:</strong> Anonymized usage data to help us improve features.</li>
+          <li><strong>Marketing Cookies:</strong> Optional cookies for personalized property recommendations (opt-in).</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>3. Managing Cookies</h4>
+        <p>You can control cookie preferences from your browser settings or TEST's Cookie Preferences panel (accessible from any page footer). Disabling analytics and marketing cookies will not affect your core rental search experience.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. Third-Party Cookies</h4>
+        <p>We use Google Analytics and similar tools which may set their own cookies. These are subject to their respective privacy policies and do not receive personally identifiable information from TEST.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#home" class="footer-logo">test<span>.</span></a>
+      <p>India's zero-brokerage rental platform connecting verified landlords and tenants across 40+ cities. Find your next home without the middleman.</p>
+      <div style="margin-top:1.5rem;">
+        <a href="mailto:hello@test.in" style="color:rgba(255,255,255,0.35);font-size:0.82rem;text-decoration:none;">hello@test.in</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>For Renters</h4>
+      <ul>
+        <li><a href="#listings">Browse Listings</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#policies" onclick="showPolicy('tenant')">Tenant Rights</a></li>
+        <li><a href="#">Save Searches</a></li>
+        <li><a href="#">Virtual Tours</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>For Landlords</h4>
+      <ul>
+        <li><a href="#">List Property</a></li>
+        <li><a href="#policies" onclick="showPolicy('landlord')">Landlord Guide</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Landlord Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#policies" onclick="showPolicy('terms')">Terms of Service</a></li>
+        <li><a href="#policies" onclick="showPolicy('privacy')">Privacy Policy</a></li>
+        <li><a href="#policies" onclick="showPolicy('cookie')">Cookie Policy</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 TEST Rentals Pvt. Ltd. All rights reserved.</span>
+    <span>Made with ❤️ for renters across India 🇮🇳</span>
+  </div>
+</footer>
+
+<script>
+  function showPolicy(name) {
+    document.querySelectorAll('.policy-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    const map = { terms: 0, privacy: 1, tenant: 2, landlord: 3, cookie: 4 };
+    document.getElementById('policy-' + name).classList.add('active');
+    document.querySelectorAll('.tab-btn')[map[name]].classList.add('active');
+    document.getElementById('policies').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function setFilter(btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
